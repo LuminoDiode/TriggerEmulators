@@ -9,6 +9,6 @@ namespace Emulators
 	public class CurrentRecord
 	{
 		public float Voltage_Volt { get; init; }
-		public DateTime TimeCreated { get; init; }
+		public long TimeCreated { get; init; }
 	}
 }
