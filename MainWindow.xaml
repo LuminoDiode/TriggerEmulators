@@ -1,0 +1,22 @@
+﻿<Window x:Class="Emulators.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Emulators"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+		SizeToContent="WidthAndHeight">
+	<Grid>
+		<StackPanel Orientation="Vertical">
+			<Label FontSize="18">Trigger Q chart</Label>
+			<WpfPlot Name="TriggerChart" Width="1000" Height="150"/>
+			<Label FontSize="18">Clock generator chart</Label>
+			<WpfPlot Name="OscillatorChart" Width="1000" Height="150"/>
+			<Label FontSize="18">S input chart</Label>
+			<WpfPlot Name="SChart" Width="1000" Height="150"/>
+			<Label FontSize="18">R input chart</Label>
+			<WpfPlot Name="RChart" Width="1000" Height="150"/>
+		</StackPanel>
+	</Grid>
+</Window>
