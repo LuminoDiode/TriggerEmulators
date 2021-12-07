@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Emulators
 {
-	public class CurrentRecord
-	{
-		public float Voltage_Volt { get; init; }
-		public long TimeCreated { get; init; }
+    public interface ITrigger
+    {
+		public bool IsInClockedMode { get; set; }
+
+		public TRIGGER_STATES CurrentState { get; set; }
 	}
 }

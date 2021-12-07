@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Emulators
 {
-	public class CurrentRecord
+	public interface IRunable
 	{
-		public float Voltage_Volt { get; init; }
-		public long TimeCreated { get; init; }
+		public bool IsRunning { get; protected set; }
 	}
 }
