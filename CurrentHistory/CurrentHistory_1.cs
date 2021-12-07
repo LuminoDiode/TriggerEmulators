@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Emulators
 {
-	public abstract class AHistory
+	public class CurrentHistory
 	{
 		public static long NowTicksOfTheDay=> DateTime.Now.Ticks-DateTime.Today.Ticks;
 
@@ -34,7 +34,7 @@ namespace Emulators
 		public List<CurrentRecord> Records { get; protected set; } = new();
 
 		protected ICurrentGenerator _TrackedGenerator;
-		public AHistory(ICurrentGenerator TrackedGenerator)
+		public CurrentHistory(ICurrentGenerator TrackedGenerator)
 		{
 			this._TrackedGenerator = TrackedGenerator;
 			this.HistoryRecordInvoker.Elapsed += PushRecordFromTracked;

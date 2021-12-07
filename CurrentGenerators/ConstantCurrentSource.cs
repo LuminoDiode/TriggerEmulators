@@ -38,7 +38,7 @@ namespace Emulators
 		/// Hostory of generator's current.
 		/// Writes new record when generator's voltage changes.
 		/// </summary>
-		public AHistory History => _ClockGenerator.History;
+		public CurrentHistory History => _ClockGenerator.History;
 		public ConstantCurrentSource()
 		{
 			this._ClockGenerator = new ClockGenerator() { Clock_Hz = 1f, LowLevel_Volt = this.CurrentLevel_Volt, HighLevel_Volt = this.CurrentLevel_Volt };

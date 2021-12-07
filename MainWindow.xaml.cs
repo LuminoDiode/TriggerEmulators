@@ -31,7 +31,7 @@ namespace Emulators
 			InitializeComponent();
 
 			oscill = trigger.C_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 5f, HighLevelDuration_sec = 5f };
-			Rgen = trigger.R_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 1f, HighLevelDuration_sec = 0.2f };
+			Rgen = trigger.R_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 0.5f, HighLevelDuration_sec = 0.1f };
 			Sgen = trigger.S_ChannelInput = new ClockGenerator { LowLevel_Volt = 0, HighLevel_Volt = 0 };
 			trigger.IsInClocked_Mode = true;
 			((ClockGenerator)oscill).ExecuteAsync(new(false));

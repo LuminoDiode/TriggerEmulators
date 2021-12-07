@@ -98,7 +98,7 @@ namespace Emulators
 		/// Hostory of generator's current.
 		/// Writes new record when generator's voltage changes.
 		/// </summary>
-		public AHistory History { get; private set; }
+		public CurrentHistory History { get; private set; }
 
 		public ClockGenerator()
 		{

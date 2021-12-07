@@ -84,14 +84,14 @@ namespace Emulators
 		}
 		public DateTime CurrentStateStartedDateTime { get; private set; }
 
-		public AHistory History { get; private set; }
+		public CurrentHistory History { get; private set; }
 
 		public RS_Trigger()
 		{
 			this.S_ChannelInput = new ConstantCurrentSource();
 			this.C_ChannelInput = new ClockGenerator();
 			this.R_ChannelInput = new ConstantCurrentSource();
-			this.History = new TriggerOutputHistory(this);
+			this.History = new CurrentHistory(this);
 
 
 			((ClockGenerator)(C_ChannelInput)).ExecuteAsync(new System.Threading.CancellationToken(false));

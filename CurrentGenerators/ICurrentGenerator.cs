@@ -10,6 +10,6 @@ namespace Emulators
 	{
 		public event EventHandler OutputChanged;
 		public float CurrentLevel_Volt { get; }
-		public AHistory History { get; }
+		public CurrentHistory History { get; }
 	}
 }
