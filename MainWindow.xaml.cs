@@ -24,20 +24,18 @@ namespace Emulators
 		public static long NowTicksOfTheDay => DateTime.Now.Ticks - DateTime.Today.Ticks;
 
 		RS_Trigger trigger = new RS_Trigger();
-		ICurrentGenerator oscill, Rgen, Sgen;
+		ICurrentSource oscill, Rgen, Sgen;
 		DispatcherTimer updateChartTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = true };
 		public MainWindow()
 		{
 			InitializeComponent();
 
+			ClockGenerator.AutoRun = true;
 			oscill = trigger.C_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 5f, HighLevelDuration_sec = 5f };
-			Rgen = trigger.R_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 0.5f, HighLevelDuration_sec = 0.1f };
+			Rgen = trigger.R_ChannelInput = new ClockGenerator { LowLevelDuration_sec = 0.7f, HighLevelDuration_sec = 0.3f };
 			Sgen = trigger.S_ChannelInput = new ClockGenerator { LowLevel_Volt = 0, HighLevel_Volt = 0 };
-			trigger.IsInClocked_Mode = true;
-			((ClockGenerator)oscill).ExecuteAsync(new(false));
-			((ClockGenerator)Rgen).ExecuteAsync(new(false));
-			((ClockGenerator)Sgen).ExecuteAsync(new(false));
-			oscill.History.SecondsStored = Rgen.History.SecondsStored = Sgen.History.SecondsStored = trigger.History.SecondsStored = 30;
+			trigger.IsInClockedMode = true;
+			oscill.OutputHistory.SecondsStored = Rgen.OutputHistory.SecondsStored = Sgen.OutputHistory.SecondsStored = trigger.OutputHistory.SecondsStored = 30;
 
 
 			updateChartTimer.Tick += UpdateChart;
@@ -45,18 +43,18 @@ namespace Emulators
 		public void UpdateChart(object? sender, EventArgs e)
 		{
 			//OscillatorChart.Plot.SetAxisLimits(xMin: 0, xMax: (DateTime.UtcNow - DateTime.UtcNow.AddSeconds(-10)).Ticks);
-			OscillatorChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -2, yMax: 2);
+			OscillatorChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -1.1, yMax: 1.1);
 			//RChart.Plot.SetAxisLimits(xMin: 0, xMax: (DateTime.UtcNow - DateTime.UtcNow.AddSeconds(-10)).Ticks);
-			RChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -2, yMax: 2);
+			RChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -1.1, yMax: 1.1);
 			//SChart.Plot.SetAxisLimits(xMin: 0, xMax: (DateTime.UtcNow - DateTime.UtcNow.AddSeconds(-10)).Ticks);
-			SChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -2, yMax: 2);
+			SChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -1.1, yMax: 1.1);
 			//TriggerChart.Plot.SetAxisLimits(xMin: 0, xMax: (DateTime.UtcNow - DateTime.UtcNow.AddSeconds(-10)).Ticks);
-			TriggerChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -2, yMax: 2);
+			TriggerChart.Plot.SetInnerViewLimits(xMin: NowTicksOfTheDay - Timespan15secs, xMax: NowTicksOfTheDay, yMin: -1.1, yMax: 1.1);
 
 
 
 			TriggerChart.Plot.Clear();
-			var vects = this.trigger.History.GetChartLines();
+			var vects = this.trigger.OutputHistory.GetChartLines();
 			if (vects.Count() > 0)
 			{
 				foreach (var vect in vects.Where(x => !float.IsNaN(x.p1.Y) && !float.IsNaN(x.p2.Y)))
@@ -69,7 +67,7 @@ namespace Emulators
 			}
 
 			OscillatorChart.Plot.Clear();
-			vects = this.oscill.History.GetChartLines();
+			vects = this.oscill.OutputHistory.GetChartLines();
 			if (vects.Count() > 0)
 			{
 				foreach (var vect in vects)
@@ -80,7 +78,7 @@ namespace Emulators
 			}
 
 			RChart.Plot.Clear();
-			vects = this.Rgen.History.GetChartLines();
+			vects = this.Rgen.OutputHistory.GetChartLines();
 			if (vects.Count() > 0)
 			{
 				foreach (var vect in vects)
@@ -91,7 +89,7 @@ namespace Emulators
 			}
 
 			SChart.Plot.Clear();
-			vects = this.Sgen.History.GetChartLines();
+			vects = this.Sgen.OutputHistory.GetChartLines();
 			if (vects.Count() > 0)
 			{
 				foreach (var vect in vects)

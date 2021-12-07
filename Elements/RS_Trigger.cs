@@ -7,28 +7,17 @@ using Emulators;
 
 namespace Emulators
 {
-	public enum STATES
+	public enum TRIGGER_STATES
 	{
 		Q_IsIncorrect = -1,
 		Q_IsZero = 0,
 		Q_IsOne = 1
 	}
-	public class RS_Trigger:ICurrentGenerator
+	public class RS_Trigger: ATrigger, ICurrentSource
 	{
 
-		
-		// Режим синхронизиуемого триггера
-		public bool IsInClocked_Mode { get; set; } = false;
-		public event EventHandler StateChanged;
-		public event EventHandler OutputChanged
-		{
-			add => StateChanged += value;
-			remove => StateChanged -= value;
-		}
-		public event EventHandler StatePendingChange;
-
-		private ICurrentGenerator _S_ChannelInput;
-		public ICurrentGenerator S_ChannelInput
+		private ICurrentSource _S_ChannelInput;
+		public ICurrentSource S_ChannelInput
 		{
 			get => _S_ChannelInput;
 			set
@@ -37,8 +26,8 @@ namespace Emulators
 				_S_ChannelInput = value;
 			}
 		}
-		private ICurrentGenerator _C_ChannelInput;
-		public ICurrentGenerator C_ChannelInput
+		private ICurrentSource _C_ChannelInput;
+		public ICurrentSource C_ChannelInput
 		{
 			get => _C_ChannelInput;
 			set
@@ -47,8 +36,8 @@ namespace Emulators
 				_C_ChannelInput = value;
 			}
 		}
-		private ICurrentGenerator _R_ChannelInput;
-		public ICurrentGenerator R_ChannelInput
+		private ICurrentSource _R_ChannelInput;
+		public ICurrentSource R_ChannelInput
 		{
 			get => _R_ChannelInput;
 			set
@@ -58,44 +47,15 @@ namespace Emulators
 			}
 		}
 
-		public float CurrentLevel_Volt
-		{
-			get => StateToVolt(this.CurrentState);
-		}
-		private float StateToVolt(STATES state) => state switch
-		{
-			STATES.Q_IsOne => 1f,
-			STATES.Q_IsZero => 0f,
-			STATES.Q_IsIncorrect => float.NaN,
-			_ => throw new NotImplementedException()
-		};
 
-		private STATES _CurrentState;
-		public STATES CurrentState
-		{
-			get => _CurrentState;
-			set
-			{
-				StatePendingChange?.Invoke(this, EventArgs.Empty);
-				_CurrentState = value;
-				CurrentStateStartedDateTime = DateTime.UtcNow;
-				StateChanged?.Invoke(this, EventArgs.Empty);
-			}
-		}
-		public DateTime CurrentStateStartedDateTime { get; private set; }
-
-		public CurrentHistory History { get; private set; }
+		
 
 		public RS_Trigger()
 		{
 			this.S_ChannelInput = new ConstantCurrentSource();
 			this.C_ChannelInput = new ClockGenerator();
 			this.R_ChannelInput = new ConstantCurrentSource();
-			this.History = new CurrentHistory(this);
-
-
-			((ClockGenerator)(C_ChannelInput)).ExecuteAsync(new System.Threading.CancellationToken(false));
-
+			base.OutputHistory = new CurrentHistory(this);
 
 			S_ChannelInput.OutputChanged += OnAnyVoltageChange;
 			C_ChannelInput.OutputChanged += OnAnyVoltageChange;
@@ -105,7 +65,7 @@ namespace Emulators
 		public void OnAnyVoltageChange(object sender, EventArgs e)
 		{
 			// Режим с синхронизацией
-			if (this.IsInClocked_Mode)
+			if (this.IsInClockedMode)
 			{
 				// есть сигнал с тактирующего входа
 				if (this.C_ChannelInput.CurrentLevel_Volt>0)
@@ -127,9 +87,9 @@ namespace Emulators
 		public void CalculateState()
 		{
 			// Состояние непредсказуемо, запрещенная комбинация
-			if (R_ChannelInput.CurrentLevel_Volt > 0 && S_ChannelInput.CurrentLevel_Volt > 0)
+			if ((R_ChannelInput.CurrentLevel_Volt > 0 && S_ChannelInput.CurrentLevel_Volt > 0))
 			{
-				this.CurrentState = STATES.Q_IsIncorrect;
+				this.CurrentState = TRIGGER_STATES.Q_IsIncorrect;
 				return;
 			}
 			// 1-0 Сохранение текущего состояния
@@ -140,22 +100,22 @@ namespace Emulators
 			// 0-1 Установка в 0
 			if (R_ChannelInput.CurrentLevel_Volt > 0)
 			{
-				this.CurrentState = STATES.Q_IsZero;
+				this.CurrentState = TRIGGER_STATES.Q_IsZero;
 				return;
 			}
 			// 0-0 Установка в 1
 			else
 			{
-				this.CurrentState = STATES.Q_IsOne;
+				this.CurrentState = TRIGGER_STATES.Q_IsOne;
 				return;
 			}
 		}
 		private void InvertState()
 		{
-			if (this.CurrentState == STATES.Q_IsZero)
-				this.CurrentState = STATES.Q_IsOne;
+			if (this.CurrentState == TRIGGER_STATES.Q_IsZero)
+				this.CurrentState = TRIGGER_STATES.Q_IsOne;
 			else
-				this.CurrentState = STATES.Q_IsZero;
+				this.CurrentState = TRIGGER_STATES.Q_IsZero;
 		}
 	}
 }

@@ -33,8 +33,8 @@ namespace Emulators
 
 		public List<CurrentRecord> Records { get; protected set; } = new();
 
-		protected ICurrentGenerator _TrackedGenerator;
-		public CurrentHistory(ICurrentGenerator TrackedGenerator)
+		protected ICurrentSource _TrackedGenerator;
+		public CurrentHistory(ICurrentSource TrackedGenerator)
 		{
 			this._TrackedGenerator = TrackedGenerator;
 			this.HistoryRecordInvoker.Elapsed += PushRecordFromTracked;
