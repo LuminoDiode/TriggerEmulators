@@ -7,50 +7,26 @@ using Emulators;
 
 namespace Emulators
 {
-	public enum TRIGGER_STATES
+	public class RSC_Trigger : ATrigger
 	{
-		Q_IsIncorrect = -1,
-		Q_IsZero = 0,
-		Q_IsOne = 1
-	}
-	public class RS_Trigger: ATrigger, ICurrentSource
-	{
-
-		private ICurrentSource _S_ChannelInput;
 		public ICurrentSource S_ChannelInput
 		{
-			get => _S_ChannelInput;
-			set
-			{
-				value.OutputChanged += OnAnyVoltageChange;
-				_S_ChannelInput = value;
-			}
+			get => base.S_ChannelInput;
+			set => base.S_ChannelInput = value;
 		}
-		private ICurrentSource _C_ChannelInput;
 		public ICurrentSource C_ChannelInput
 		{
-			get => _C_ChannelInput;
-			set
-			{
-				value.OutputChanged += OnAnyVoltageChange;
-				_C_ChannelInput = value;
-			}
+			get => base.C_ChannelInput;
+			set => base.C_ChannelInput = value;
 		}
-		private ICurrentSource _R_ChannelInput;
 		public ICurrentSource R_ChannelInput
 		{
-			get => _R_ChannelInput;
-			set
-			{
-				value.OutputChanged += OnAnyVoltageChange;
-				_R_ChannelInput = value;
-			}
+			get => base.R_ChannelInput;
+			set => base.R_ChannelInput = value;
+
 		}
 
-
-		
-
-		public RS_Trigger()
+		public RSC_Trigger()
 		{
 			this.S_ChannelInput = new ConstantCurrentSource();
 			this.C_ChannelInput = new ClockGenerator();
@@ -62,13 +38,13 @@ namespace Emulators
 			R_ChannelInput.OutputChanged += OnAnyVoltageChange;
 		}
 
-		public void OnAnyVoltageChange(object sender, EventArgs e)
+		protected override void OnAnyVoltageChange(object sender, EventArgs e)
 		{
 			// Режим с синхронизацией
-			if (this.IsInClockedMode)
+			if (true)
 			{
-				// есть сигнал с тактирующего входа
-				if (this.C_ChannelInput.CurrentLevel_Volt>0)
+				// сигнал с тактирующего входа
+				if (sender == this.C_ChannelInput)
 				{
 					// сигнал положительной величины
 					if (this.C_ChannelInput.CurrentLevel_Volt > 0)
@@ -84,7 +60,7 @@ namespace Emulators
 			}
 		}
 
-		public void CalculateState()
+		protected override void CalculateState()
 		{
 			// Состояние непредсказуемо, запрещенная комбинация
 			if ((R_ChannelInput.CurrentLevel_Volt > 0 && S_ChannelInput.CurrentLevel_Volt > 0))
@@ -109,13 +85,6 @@ namespace Emulators
 				this.CurrentState = TRIGGER_STATES.Q_IsOne;
 				return;
 			}
-		}
-		private void InvertState()
-		{
-			if (this.CurrentState == TRIGGER_STATES.Q_IsZero)
-				this.CurrentState = TRIGGER_STATES.Q_IsOne;
-			else
-				this.CurrentState = TRIGGER_STATES.Q_IsZero;
 		}
 	}
 }

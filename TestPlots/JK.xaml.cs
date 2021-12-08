@@ -12,17 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Emulators;
-using System.Timers;
-using System.Windows.Threading;
 
-namespace Emulators
+namespace TriggerEmulators.TestPlots
 {
-	public partial class MainWindow : Window
+	/// <summary>
+	/// Interaction logic for JK.xaml
+	/// </summary>
+	public partial class JK : UserControl
 	{
-		public MainWindow()
+		public JK()
 		{
 			InitializeComponent();
+
 		}
 	}
 }

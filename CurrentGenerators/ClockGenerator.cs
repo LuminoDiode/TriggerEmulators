@@ -10,8 +10,10 @@ namespace Emulators
 	/// An abstract clock generator. Generates square impulses and writes it's history.
 	///	Default parameters is 1 Volt, 1 Hz, 0.1 sec high voltage phase duration.
 	/// </summary>
-	public class ClockGenerator : ICurrentSource, IRunable
+	public class ClockGenerator : ICurrentGenerator
 	{
+<<<<<<< Updated upstream:CurrentGenerators/ClockGenerator.cs
+=======
 		public static bool AutoRun { get; set; }
 		private bool _IsRunning;
 		private CancellationTokenSource _MyCancellationTokenSource;
@@ -38,6 +40,7 @@ namespace Emulators
 		}
 
 
+>>>>>>> Stashed changes:Elements/CurrentGenerators/ClockGenerator.cs
 		public event EventHandler OutputChanged;
 		/// <summary>
 		/// Voltage of low level phase (see <see cref="CLOCK_GENERATOR_PHASE"/>).
@@ -124,19 +127,30 @@ namespace Emulators
 		/// Hostory of generator's current.
 		/// Writes new record when generator's voltage changes.
 		/// </summary>
-		public CurrentHistory OutputHistory { get; private set; }
+		public AHistory History { get; private set; }
 
 		public ClockGenerator()
 		{
+<<<<<<< Updated upstream:CurrentGenerators/ClockGenerator.cs
+			this.History = new CurrentHistory(this);
+=======
 			this.OutputHistory = new CurrentHistory(this);
 			if (AutoRun) { IsRunning = true; }
+>>>>>>> Stashed changes:Elements/CurrentGenerators/ClockGenerator.cs
 		}
 
+
+		public bool IsExecuting { get; private set; } = false;
 		/// <summary>
 		/// Runs generator.
 		/// </summary>
+<<<<<<< Updated upstream:CurrentGenerators/ClockGenerator.cs
+		public async Task ExecuteAsync(CancellationToken ct)
+=======
 		private async void ExecuteAsync(CancellationToken ct)
+>>>>>>> Stashed changes:Elements/CurrentGenerators/ClockGenerator.cs
 		{
+			IsExecuting = true;
 			while (!ct.IsCancellationRequested)
 			{
 				Console.Write("Im in execute async cycle");

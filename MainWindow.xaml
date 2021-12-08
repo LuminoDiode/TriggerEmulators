@@ -8,24 +8,6 @@
         Title="MainWindow" 
 		SizeToContent="WidthAndHeight">
 	<Grid>
-		<TabControl>
-			<TabItem Header="JK Trigger">
-
-			</TabItem>
-			<TabItem Header="RSC Trigger">
-				<TabItem.Content>
-					<StackPanel Orientation="Vertical">
-						<Label FontSize="18">Trigger Q chart</Label>
-						<WpfPlot Name="TriggerChart" Width="600" Height="120"/>
-						<Label FontSize="18">Clock generator chart</Label>
-						<WpfPlot Name="OscillatorChart" Width="600" Height="120"/>
-						<Label FontSize="18">S input chart</Label>
-						<WpfPlot Name="SChart" Width="600" Height="120"/>
-						<Label FontSize="18">R input chart</Label>
-						<WpfPlot Name="RChart" Width="600" Height="120"/>
-					</StackPanel>
-				</TabItem.Content>
-			</TabItem>
-		</TabControl>
+		<Frame Source="/TestPlots/JK_Trigger_Page.xaml"/>
 	</Grid>
 </Window>

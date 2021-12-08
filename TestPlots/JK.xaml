@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="TriggerEmulators.TestPlots.JK"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TriggerEmulators.TestPlots"
+             mc:Ignorable="d" 
+             d:DesignHeight="640" d:DesignWidth="800">
+	<Grid>
+		<StackPanel Orientation="Vertical" Margin="0,0,0,-34">
+			<Label FontSize="20">JK Trigger chart</Label>
+			<WpfPlot HorizontalAlignment="Left" Name="JK_TriggerChart" Width="600" Height="120"/>
+			<Label FontSize="16">J input chart</Label>
+			<DockPanel>
+				<WpfPlot Name="RS_SChart" Width="600" Height="120"/>
+				<StackPanel Orientation="Vertical">
+					<DockPanel>
+						<Label>High level voltage</Label>
+						<TextBox Name="J_HighVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level voltage</Label>
+						<TextBox Name="J_LowVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hight level duration</Label>
+						<TextBox Name="J_HightVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level duration</Label>
+						<TextBox x:Name="J_LowVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hz</Label>
+						<TextBox Name="J_Hz" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</DockPanel>
+			<Label FontSize="16">C input chart</Label>
+			<DockPanel>
+				<WpfPlot Name="RS_CChart" Width="600" Height="120"/>
+				<StackPanel Orientation="Vertical">
+					<DockPanel>
+						<Label>High level voltage</Label>
+						<TextBox Name="C_HighVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level voltage</Label>
+						<TextBox Name="C_LowVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hight level duration</Label>
+						<TextBox Name="C_HightVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level duration</Label>
+						<TextBox Name="C_LowVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hz</Label>
+						<TextBox Name="C_Hz" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</DockPanel>
+			<Label FontSize="16">K input chart</Label>
+			<DockPanel>
+				<WpfPlot Name="RS_RChart" Width="600" Height="120"/>
+				<StackPanel Orientation="Vertical">
+					<DockPanel>
+						<Label>High level voltage</Label>
+						<TextBox Name="K_HighVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level voltage</Label>
+						<TextBox Name="K_LowVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hight level duration</Label>
+						<TextBox Name="K_HightVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level duration</Label>
+						<TextBox Name="K_LowVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hz</Label>
+						<TextBox Name="K_Hz" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</DockPanel>
+		</StackPanel>
+	</Grid>
+</UserControl>

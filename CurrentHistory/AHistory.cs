@@ -9,9 +9,9 @@ using System.Drawing;
 
 namespace Emulators
 {
-	public class CurrentHistory
+	public abstract class AHistory
 	{
-		public static long NowTicksOfTheDay=> DateTime.Now.Ticks-DateTime.Today.Ticks;
+		protected static long NowTicks => DateTime.UtcNow.Ticks;
 
 		public event EventHandler? HistoryChanged;
 
@@ -33,11 +33,11 @@ namespace Emulators
 
 		public List<CurrentRecord> Records { get; protected set; } = new();
 
-		protected ICurrentSource _TrackedGenerator;
-		public CurrentHistory(ICurrentSource TrackedGenerator)
+		protected ICurrentGenerator _TrackedGenerator;
+		public AHistory(ICurrentGenerator TrackedGenerator)
 		{
 			this._TrackedGenerator = TrackedGenerator;
-			this.HistoryRecordInvoker.Elapsed += PushRecordFromTracked;
+			this._TrackedGenerator.HistoryRecordInvoker += PushRecordFromTracked;
 			PushRecordFromTracked(this,EventArgs.Empty);
 		}
 
@@ -46,36 +46,39 @@ namespace Emulators
 			var record = new CurrentRecord
 			{
 				Voltage_Volt = this._TrackedGenerator.CurrentLevel_Volt,
-				TimeCreated = NowTicksOfTheDay
+				TimeCreated = DateTime.UtcNow
 			};
 
 			Records.Add(record);
 
-			while ((Records.Count > RecordsStored))
+			while ((Records.Count > 2) && ((DateTime.UtcNow - Records[1].TimeCreated).Seconds > SecondsStored))
 				Records.RemoveAt(0);
 
 			HistoryChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 
-
 		public List<(PointF p1, PointF p2)> GetChartLines(float PointIntervalMsec = 100)
 		{
 			List<(PointF p1, PointF p2)> Out = new List<(PointF p1, PointF p2)>((int)(SecondsStored / PointIntervalMsec + 0.5f));
 
-			for (int i = 0; i<Records.Count-1; i++)
+			for (int i = 0; (i * PointIntervalMsec) < SecondsStored*1000; i++)
 			{
-				var currRec = Records[i];
-				var nextRec = Records[i+1];
+				var currRec = GetRecordByTime(DateTime.UtcNow.AddSeconds(-(i * PointIntervalMsec / 1000)));
+				var nextRec = GetRecordByTime(DateTime.UtcNow.AddSeconds(-((i + 1) * PointIntervalMsec / 1000)));
 				//if (currRec == nextRec) break;
 
 				Out.Add((
-					new PointF(currRec.TimeCreated, currRec.Voltage_Volt),
-					new PointF(nextRec.TimeCreated, nextRec.Voltage_Volt)
+					new PointF(currRec.TimeCreated.Ticks, currRec.Voltage_Volt),
+					new PointF(nextRec.TimeCreated.Ticks, nextRec.Voltage_Volt)
 					));
 			}
-
 			return Out;
+		}
+		protected CurrentRecord GetRecordByTime(DateTime TimeMoment)
+		{
+			var id = Records.FindIndex(x => (x.TimeCreated - TimeMoment).Ticks < 0);
+			return id!=-1 ? Records[id]: Records[Records.Count - 1];
 		}
 	}
 }
