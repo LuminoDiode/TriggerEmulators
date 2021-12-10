@@ -12,7 +12,7 @@ namespace Emulators
 	/// </summary>
 	public class ClockGenerator : ICurrentSource, IRunable
 	{
-		public static bool AutoRun { get; set; }
+		public static bool AutoRun { get; set; } = true;
 		private bool _IsRunning;
 		private CancellationTokenSource _MyCancellationTokenSource;
 		public bool IsRunning

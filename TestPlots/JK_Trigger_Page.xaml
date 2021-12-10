@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:TriggerEmulators.TestPlots"
+      xmlns:local="clr-namespace:Emulators"
       mc:Ignorable="d" d:DesignWidth="770" d:Height="640"
-      Title="JK_Trigger_Page" Height="640" >
+      Title="JK_Trigger_Page" >
 
 	<Grid>
 		<StackPanel Orientation="Vertical" Margin="0,0,0,-34">

@@ -8,12 +8,12 @@ using System.Windows.Threading;
 
 namespace Emulators
 {
-	class ChartToHistorySyncer
+	class ChartToHistoryAutosyncer
 	{
 		private DispatcherTimer updateChartTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = true };
 		public List<(WpfPlot plot, CurrentHistory history)> Pairs { get; } = new List<(WpfPlot plot, CurrentHistory history)>();
 
-		public ChartToHistorySyncer()
+		public ChartToHistoryAutosyncer()
 		{
 			updateChartTimer.Tick += UpdateAll;
 		}
@@ -26,6 +26,11 @@ namespace Emulators
 				var History = pair.history;
 
 				Chart.Plot.Clear();
+
+				//Chart.Plot.SetAxisLimitsX(-1.2d, +1.2d);
+				//Chart.Plot.SetAxisLimitsY((DateTime.Now - DateTime.Today.AddSeconds(-30)).Ticks, (DateTime.Now - DateTime.Today).Ticks);
+				Chart.Plot.SetInnerViewLimits((DateTime.Now - DateTime.Today.AddSeconds(-59)).Ticks, (DateTime.Now - DateTime.Today).Ticks, -1.2d, +1.2d);
+				//Chart.Plot.SetOuterViewLimits((DateTime.Now - DateTime.Today.AddSeconds(-60)).Ticks, (DateTime.Now - DateTime.Today).Ticks, -1.2d, +1.2d);
 
 				var vects = History.GetChartLines();
 

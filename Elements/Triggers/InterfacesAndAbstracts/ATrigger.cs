@@ -9,7 +9,8 @@ namespace Emulators
     public abstract class ATrigger :ICurrentSource,ITrigger
     {
 		// Складывается ложное ощущение, что это конкретно RSC триггер, но на деле JK Триггер просто
-		// должен переименовать названия каналов, через свойства, в остальном их не надо переписывать.
+		// должен переименовать названия каналов, через свойства, и сменить алгоритм калькуляции, через override метод.
+		// В остальном их не надо переписывать.
 		private ICurrentSource _S_ChannelInput;
 		protected ICurrentSource S_ChannelInput
 		{
@@ -40,6 +41,20 @@ namespace Emulators
 				_R_ChannelInput = value;
 			}
 		}
+
+		public ICurrentSource Q_Channel_Output => (this);
+
+		private ICurrentSource _InvQ_Channel_Input;
+		public ICurrentSource InvQ_Channel_Input
+		{
+			get
+			{
+				if (this._InvQ_Channel_Input == null)
+					this._InvQ_Channel_Input = new LogicalInvertor(this);
+				return this._InvQ_Channel_Input;
+			}
+		}
+
 		protected abstract void OnAnyVoltageChange(object sender, EventArgs e);
 		protected abstract void CalculateState();
 

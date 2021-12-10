@@ -15,7 +15,7 @@ namespace Emulators
 
 		public event EventHandler? HistoryChanged;
 
-		protected Timer HistoryRecordInvoker = new Timer { Interval = 100d, AutoReset = true, Enabled = true };
+		protected Timer HistoryRecordInvoker = new Timer { Interval = 50d, AutoReset = true, Enabled = true };
 
 		public int RecordInterval_msec
 		{
@@ -38,6 +38,7 @@ namespace Emulators
 		{
 			this._TrackedGenerator = TrackedGenerator;
 			this.HistoryRecordInvoker.Elapsed += PushRecordFromTracked;
+			this.SecondsStored = 30;
 			PushRecordFromTracked(this,EventArgs.Empty);
 		}
 
@@ -49,9 +50,10 @@ namespace Emulators
 				TimeCreated = NowTicksOfTheDay
 			};
 
-			Records.Add(record);
+			this.Records.Add(record);
+			Console.WriteLine("Added record, current count is " + this.Records.Count);
 
-			while ((Records.Count > RecordsStored))
+			while (Records.Count > RecordsStored)
 				Records.RemoveAt(0);
 
 			HistoryChanged?.Invoke(this, EventArgs.Empty);
@@ -63,7 +65,7 @@ namespace Emulators
 		{
 			List<(PointF p1, PointF p2)> Out = new List<(PointF p1, PointF p2)>((int)(SecondsStored / PointIntervalMsec + 0.5f));
 
-			for (int i = 0; i<Records.Count-1; i++)
+			for (int i = 0; i<this.Records.Count-1; i++)
 			{
 				var currRec = Records[i];
 				var nextRec = Records[i+1];

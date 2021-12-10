@@ -39,29 +39,14 @@ namespace Emulators
 
 		protected override void OnAnyVoltageChange(object sender, EventArgs e)
 		{
-			// Режим с синхронизацией
-			if (true)
-			{
-				// сигнал с тактирующего входа
-				if (sender == this.C_ChannelInput)
-				{
-					// сигнал положительной величины
-					if (this.C_ChannelInput.CurrentLevel_Volt > 0)
-					{
-						CalculateState();
-					}
-				}
-			}
-			// Режим без синхронизации
-			else
-			{
+			// сигнал с тактирующего входа // сигнал положительной величины
+			if (sender == this.C_ChannelInput && this.C_ChannelInput.CurrentLevel_Volt > 0)
 				CalculateState();
-			}
 		}
 
 		protected override void CalculateState()
 		{
-			// интвертировать состояние
+			// 1-1 интвертировать состояние
 			if ((K_ChannelInput.CurrentLevel_Volt > 0 && J_ChannelInput.CurrentLevel_Volt > 0))
 			{
 				this.InvertState();
