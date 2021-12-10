@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:Emulators"
         mc:Ignorable="d"
         Title="MainWindow" 
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize">
 	<Grid>
-		<TabControl>
+		<TabControl Height="665" Width="770">
 			<TabItem Header="RS Trigger">
 				<Frame Source="/TestPlots/RS_Trigger_Page.xaml"/>
 			</TabItem>
