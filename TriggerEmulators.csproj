@@ -11,4 +11,10 @@
     <PackageReference Include="ScottPlot.WPF" Version="4.1.27" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="src\TestPlots\DoubleRSC_Trigger_Page.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

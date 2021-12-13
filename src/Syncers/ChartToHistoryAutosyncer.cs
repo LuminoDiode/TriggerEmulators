@@ -29,16 +29,22 @@ namespace Emulators
 
 				//Chart.Plot.SetAxisLimitsX(-1.2d, +1.2d);
 				//Chart.Plot.SetAxisLimitsY((DateTime.Now - DateTime.Today.AddSeconds(-30)).Ticks, (DateTime.Now - DateTime.Today).Ticks);
-				Chart.Plot.SetInnerViewLimits((DateTime.Now - DateTime.Today.AddSeconds(-59)).Ticks, (DateTime.Now - DateTime.Today).Ticks, -1.2d, +1.2d);
+				double
+					xMin = (DateTime.Now - DateTime.Today.AddSeconds(30)).Ticks,
+					xMax = (DateTime.Now - DateTime.Today).Ticks,
+					yMin = -1.2d,
+					yMax = 1.2d;
+				Chart.Plot.SetInnerViewLimits(xMin,xMax,yMin,yMax);
+				Chart.Plot.SetOuterViewLimits(xMin, xMax, yMin, yMax);
 				//Chart.Plot.SetOuterViewLimits((DateTime.Now - DateTime.Today.AddSeconds(-60)).Ticks, (DateTime.Now - DateTime.Today).Ticks, -1.2d, +1.2d);
 
 				var vects = History.GetChartLines();
 
 				if (vects.Any())
 					foreach (var vect in vects.Where(x => !float.IsNaN(x.p1.Y) && !float.IsNaN(x.p2.Y)))
-						Chart.Plot.AddLine(vect.p1.X, vect.p1.Y, vect.p2.X, vect.p2.Y, color: System.Drawing.Color.Red, lineWidth: 4);
+						Chart.Plot.AddLine(vect.p1.X, vect.p1.Y, vect.p2.X, vect.p2.Y, color: System.Drawing.Color.Red, lineWidth: 2);
 
-				Chart.Refresh(true);
+				Chart.Refresh(false);
 			}
 		}
 	}

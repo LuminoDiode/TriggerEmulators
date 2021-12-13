@@ -16,11 +16,17 @@
 			<TabItem Header="RSC Triger">
 				<Frame Source="/src/TestPlots/RSC_Trigger_Page.xaml"/>
 			</TabItem>
+			<TabItem Header="Double RSC" IsEnabled="false">
+				<Frame Source="/src/TestPlots/RSC_Trigger_Page.xaml"/>
+			</TabItem>
 			<TabItem Header="JK Triger">
 				<Frame Source="/src/TestPlots/JK_Trigger_Page.xaml"/>
 			</TabItem>
 			<TabItem Header="D Triger">
 				<Frame Source="/src/TestPlots/D_Trigger_Page.xaml"/>
+			</TabItem>
+			<TabItem Header="T Triger">
+				<Frame Source="/src/TestPlots/T_Trigger_Page.xaml"/>
 			</TabItem>
 		</TabControl>
 	</Grid>

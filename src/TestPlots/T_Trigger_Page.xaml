@@ -1,0 +1,69 @@
+﻿<Page x:Class="Emulators.T_Trigger_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Emulators"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="T_Trigger_Page">
+
+	<Grid>
+		<StackPanel Orientation="Vertical">
+			<Label FontSize="20">T Trigger chart</Label>
+			<WpfPlot HorizontalAlignment="Left" Name="T_TriggerChart" Width="600" Height="120"/>
+			<Label FontSize="16">T input chart</Label>
+			<DockPanel>
+				<WpfPlot Name="D_Chart" Width="600" Height="120"/>
+				<StackPanel Orientation="Vertical">
+					<DockPanel>
+						<Label>High level voltage</Label>
+						<TextBox Name="T_HighVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level voltage</Label>
+						<TextBox Name="T_LowVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hight level duration</Label>
+						<TextBox Name="T_HightVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level duration</Label>
+						<TextBox x:Name="T_LowVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hz</Label>
+						<TextBox Name="T_Hz" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</DockPanel>
+			<Label FontSize="16">C input chart</Label>
+			<DockPanel>
+				<WpfPlot Name="C_Chart" Width="600" Height="120"/>
+				<StackPanel Orientation="Vertical">
+					<DockPanel>
+						<Label>High level voltage</Label>
+						<TextBox Name="C_HighVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level voltage</Label>
+						<TextBox Name="C_LowVoltageInput" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hight level duration</Label>
+						<TextBox Name="C_HightVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Low level duration</Label>
+						<TextBox Name="C_LowVoltageDuration" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+					<DockPanel>
+						<Label>Hz</Label>
+						<TextBox Name="C_Hz" HorizontalAlignment="Right" Width="50"></TextBox>
+					</DockPanel>
+				</StackPanel>
+			</DockPanel>
+		</StackPanel>
+	</Grid>
+</Page>

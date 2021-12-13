@@ -10,7 +10,7 @@ namespace Emulators
 	{
 		public int DelayDepth = 1;
 
-		public Stack<float> DelayedOutputValues = new();
+		public Queue<float> DelayedOutputValues = new();
 
 		public ICurrentSource InputChannel;
 		public ICurrentSource ClockChannel;
@@ -36,10 +36,10 @@ namespace Emulators
 		}
 		protected override void CalculateState()
 		{
-			this.DelayedOutputValues.Push(InputChannel.CurrentLevel_Volt);
+			this.DelayedOutputValues.Enqueue(InputChannel.CurrentLevel_Volt);
 			while (this.DelayedOutputValues.Count > DelayDepth)
 			{
-				base.CurrentState = this.DelayedOutputValues.Pop()==0f? 
+				base.CurrentState = this.DelayedOutputValues.Dequeue()==0f? 
 					TRIGGER_STATES.Q_IsZero:TRIGGER_STATES.Q_IsOne;
 			}
 		}

@@ -37,12 +37,14 @@ namespace Emulators
 			this.FirstTrigger.R_ChannelInput= this.R_ChannelInput;
 
 			this.SecondTrigger.S_ChannelInput = FirstTrigger.Q_Channel_Output;
-			this.FirstTrigger.C_ChannelInput = new LogicalInvertor(this.C_ChannelInput);
+			this.SecondTrigger.C_ChannelInput = new LogicalDelayer(this.FirstTrigger.C_ChannelInput, this.FirstTrigger.C_ChannelInput);
 			this.SecondTrigger.R_ChannelInput = FirstTrigger.InvQ_Channel_Input;
+
+			base.OutputHistory = SecondTrigger.OutputHistory;
 		}
 		protected override void CalculateState()
 		{
-			this.CurrentState = SecondTrigger.CurrentState;
+			
 		}
 		protected override void OnAnyVoltageChange(object senrder, EventArgs e)
 		{

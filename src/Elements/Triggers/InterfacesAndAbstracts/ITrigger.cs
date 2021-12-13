@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Emulators
 {
-    public interface ITrigger
-    {
+    public interface ITrigger:ICurrentSource
+	{
 		public TRIGGER_STATES CurrentState { get; set; }
 	}
 }
