@@ -35,9 +35,6 @@ namespace Emulators
 		public CurrentHistory OutputHistory { get; }
 		public LogicalInvertor(ICurrentSource InputChannel)
 		{
-			/* На схеме вход не всегда задаётся сразу
-			 * Тогда Task.Run(()=> ... while(InputChannel==null) Task.Delay(...))
-			 */
 			this.InputChannel = InputChannel;
 			this.InputChannel.OutputChanged += OnAnyVoltageChange;
 			this.OutputHistory = new CurrentHistory(this);

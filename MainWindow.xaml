@@ -11,13 +11,16 @@
 	<Grid>
 		<TabControl Height="665" Width="770">
 			<TabItem Header="RS Trigger">
-				<Frame Source="/TestPlots/RS_Trigger_Page.xaml"/>
+				<Frame Source="/src/TestPlots/RS_Trigger_Page.xaml"/>
 			</TabItem>
 			<TabItem Header="RSC Triger">
-				<Frame Source="/TestPlots/RSC_Trigger_Page.xaml"/>
+				<Frame Source="/src/TestPlots/RSC_Trigger_Page.xaml"/>
 			</TabItem>
 			<TabItem Header="JK Triger">
-				<Frame Source="/TestPlots/JK_Trigger_Page.xaml"/>
+				<Frame Source="/src/TestPlots/JK_Trigger_Page.xaml"/>
+			</TabItem>
+			<TabItem Header="D Triger">
+				<Frame Source="/src/TestPlots/D_Trigger_Page.xaml"/>
 			</TabItem>
 		</TabControl>
 	</Grid>

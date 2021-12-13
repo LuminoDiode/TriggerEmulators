@@ -39,7 +39,8 @@ namespace Emulators
 			this.DelayedOutputValues.Push(InputChannel.CurrentLevel_Volt);
 			while (this.DelayedOutputValues.Count > DelayDepth)
 			{
-				base.CurrentLevel_Volt = this.DelayedOutputValues.Pop();
+				base.CurrentState = this.DelayedOutputValues.Pop()==0f? 
+					TRIGGER_STATES.Q_IsZero:TRIGGER_STATES.Q_IsOne;
 			}
 		}
 	}

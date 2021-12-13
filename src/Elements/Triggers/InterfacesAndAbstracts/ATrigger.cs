@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Emulators
 {
-    public abstract class ATrigger :ACurrentSource,ITrigger
+    public abstract class ATrigger :ICurrentSource,ITrigger
     {
 		// Складывается ложное ощущение, что это конкретно RSC триггер, но на деле JK Триггер просто
 		// должен переименовать названия каналов, через свойства, и сменить алгоритм калькуляции, через override метод.
@@ -78,6 +78,12 @@ namespace Emulators
 			}
 		}
 
+		public CurrentHistory OutputHistory { get; protected set; }
+
+		public float CurrentLevel_Volt
+		{
+			get => StateToVolt(this.CurrentState);
+		}
 		private float StateToVolt(TRIGGER_STATES state) => state switch
 		{
 			TRIGGER_STATES.Q_IsOne => 1f,
