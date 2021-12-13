@@ -12,9 +12,7 @@ namespace Emulators
 	public class CurrentHistory
 	{
 		public static long NowTicksOfTheDay=> DateTime.Now.Ticks-DateTime.Today.Ticks;
-
 		public event EventHandler? HistoryChanged;
-
 		protected Timer HistoryRecordInvoker = new Timer { Interval = 50d, AutoReset = true, Enabled = true };
 
 		public int RecordInterval_msec
@@ -29,7 +27,6 @@ namespace Emulators
 			get => RecordsStored / RecordInterval_msec;
 			set => RecordsStored = value * 1000 / RecordInterval_msec;
 		}
-
 
 		public List<CurrentRecord> Records { get; protected set; } = new();
 
@@ -59,8 +56,6 @@ namespace Emulators
 			HistoryChanged?.Invoke(this, EventArgs.Empty);
 		}
 
-
-
 		public List<(PointF p1, PointF p2)> GetChartLines(float PointIntervalMsec = 100)
 		{
 			List<(PointF p1, PointF p2)> Out = new List<(PointF p1, PointF p2)>((int)(SecondsStored / PointIntervalMsec + 0.5f));
@@ -74,7 +69,7 @@ namespace Emulators
 				Out.Add((
 					new PointF(currRec.TimeCreated, currRec.Voltage_Volt),
 					new PointF(nextRec.TimeCreated, nextRec.Voltage_Volt)
-					));
+				));
 			}
 
 			return Out;
